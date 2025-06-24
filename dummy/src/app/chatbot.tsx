@@ -26,7 +26,7 @@ const Chatbot: React.FC = () => {
 
   return (
     <div>
-      <h1>Dummy Next.js TypeScript App</h1>
+      <h1>Dummy Next.js TypeScript App Test</h1>
       <div>
         <img
           src="https://png.pngtree.com/png-vector/20230131/ourmid/pngtree-ask-me-casual-labels-png-image_6578076.png"
