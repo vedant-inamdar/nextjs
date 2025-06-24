@@ -7,7 +7,7 @@ const Chatbot: React.FC = () => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   const apiKey =
-    "0c22bfd3dda9de720ba7edff2b1bc41e3f10b444fa791b83a6fa198457bc73db";
+    "MTQ6MmEyMmQyMjlmYzBiZWUxOWViODU2MzI4M2JmMmEzOTE6YjIzODE2ZWI5N2E0MGQ3NjJjMWJlZDBmZGJhNzA4Mzc5M2MyYjUzN2MzZTdlYzk5NWIzMTAzZTYxZDFlNzNjZQ==";
   const chatbotUrl = "https://ai.nexus.corecotechnologies.com/chatbot-tenant";
 
   const handleImageClick = () => {
