@@ -1,16 +1,21 @@
-"use client"; // This marks this file as a client-side component
+"use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import styles from "./chatbot.module.css";
 
 const Chatbot: React.FC = () => {
   const [showChatbot, setShowChatbot] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
-  // const apiKey =
-  // "MTQ6MmEyMmQyMjlmYzBiZWUxOWViODU2MzI4M2JmMmEzOTE6YjIzODE2ZWI5N2E0MGQ3NjJjMWJlZDBmZGJhNzA4Mzc5M2MyYjUzN2MzZTdlYzk5NWIzMTAzZTYxZDFlNzNjZQ==";
   const apiKey = process.env.NEXT_PUBLIC_APIKEY;
-  console.log(apiKey);
   const chatbotUrl = "https://ai.nexus.corecotechnologies.com/chatbot-tenant";
+
+  useEffect(() => {
+    if (showChatbot) {
+      setIsLoading(true);
+    }
+  }, [showChatbot]);
 
   const handleImageClick = () => {
     setShowChatbot(!showChatbot);
@@ -22,49 +27,39 @@ const Chatbot: React.FC = () => {
         { type: "SET_API_KEY", apiKey },
         "https://ai.nexus.corecotechnologies.com/chatbot-tenant"
       );
-      console.log(apiKey);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div>
-      <h1>Dummy Next.js TypeScript App Test</h1>
-      <div>
-        <img
-          src="https://png.pngtree.com/png-vector/20230131/ourmid/pngtree-ask-me-casual-labels-png-image_6578076.png"
-          alt="Open Chatbot"
-          style={{
-            width: "80px",
-            height: "80px",
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            border: "1px solid #ccc",
-            borderRadius: "10px",
-            cursor: "pointer",
-          }}
-          onClick={handleImageClick}
-        />
-      </div>
+    <div className={styles.appContainer}>
+      <h1>Dummy Next.js TypeScript App</h1>
 
       {showChatbot && (
-        <iframe
-          ref={iframeRef}
-          title="Chatbot"
-          src={chatbotUrl}
-          onLoad={handleIframeLoad}
-          width="500"
-          height="500"
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            border: "1px solid #ccc",
-            borderRadius: "10px",
-            zIndex: 1000,
-          }}
-        />
+        <div className={styles.chatbotWrapper}>
+          <iframe
+            ref={iframeRef}
+            title="Chatbot"
+            src={chatbotUrl}
+            onLoad={handleIframeLoad}
+            className={`${styles.chatbotIframe} ${
+              isLoading ? styles.hidden : styles.visible
+            }`}
+          />
+        </div>
       )}
+
+      <div className={styles.chatbotToggleBtn} onClick={handleImageClick}>
+        <img
+          className={showChatbot ? styles.imgClose : styles.imgChat}
+          src={
+            showChatbot
+              ? "https://cdn-icons-png.flaticon.com/512/1828/1828778.png"
+              : "https://cdn-icons-png.flaticon.com/512/2462/2462719.png"
+          }
+          alt="Toggle Chatbot"
+        />
+      </div>
     </div>
   );
 };
