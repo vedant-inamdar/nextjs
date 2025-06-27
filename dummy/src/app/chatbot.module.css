@@ -30,24 +30,49 @@
 .hidden {
   opacity: 0;
 }
-
 .visible {
   opacity: 1;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateX(50%) translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(50%) translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translateX(50%) translateY(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(50%) translateY(100%);
+    opacity: 0;
+  }
+}
+
+.chatbotClosing {
+  animation: slideOutDown 0.3s ease-out forwards;
 }
 
 .chatbotToggleBtn {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   background-color: #1897c0;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: floatPulse 2s infinite ease-in-out;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -67,26 +92,63 @@
   height: 18px !important;
 }
 
-@keyframes slideInUp {
-  from {
-    transform: translateX(50%) translateY(100%);
-    opacity: 0;
+.imgChat {
+  width: 28px;
+  height: 28px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+.imgChat:hover {
+  transform: rotate(10deg) scale(1.05);
+}
+
+.chatbotToggleBtn::after {
+  content: "Ask Me";
+  position: absolute;
+  top: -32px;
+  background: #fff;
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  white-space: nowrap;
+  animation: chatLabelCycle 12s infinite;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.hideLabel::after {
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+@keyframes floatPulse {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
-  to {
-    transform: translateX(50%) translateY(0%);
-    opacity: 1;
+  50% {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   }
 }
 
-@keyframes pulse {
+@keyframes chatLabelCycle {
   0% {
-    opacity: 1;
+    content: "Ask Me!";
   }
-  50% {
-    opacity: 0.4;
+  33% {
+    content: "Chat!";
+  }
+  66% {
+    content: "Hello!";
   }
   100% {
-    opacity: 1;
+    content: "Ask Me!";
   }
 }
 
